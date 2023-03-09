@@ -6,6 +6,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	cc "github.com/ravayak/copee_backend/apis/controllers/clients"
+	cp "github.com/ravayak/copee_backend/apis/controllers/companies"
 	guc "github.com/ravayak/copee_backend/apis/controllers/groups/users"
 	"github.com/ravayak/copee_backend/app/middlewares"
 )
@@ -35,11 +36,11 @@ func mapGroupsUsersUrls() {
 
 func mapCompaniesUrls() {
 	companiesRoutes := router.Group(globalPath + "/companies")
-	companiesRoutes.POST("", cc.Create)
-	// companiesRoutes.GET("", cc.List)
-	// companiesRoutes.GET("/:company_id", cc.Get)
-	// companiesRoutes.PUT(":company_id", cc.Update)
-	// companiesRoutes.DELETE(":company_id", cc.Delete)
+	companiesRoutes.POST("", cp.Create)
+	companiesRoutes.GET("", cp.List)
+	companiesRoutes.GET("/:company_id", cp.Get)
+	companiesRoutes.PUT(":company_id", cp.Update)
+	companiesRoutes.DELETE(":company_id", cp.Delete)
 }
 
 // MapUrls maps urls to the associated controllers

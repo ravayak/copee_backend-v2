@@ -7,4 +7,5 @@ const (
 	INSTALLATION_WAITING_STATUS          = "WAITING"
 	Secret                        string = "abc&1*~#^2^#s0^=)^^7%b34"
 	UNAUTHORIZED                         = "unauthorized"
+	ADMIN_STATUS                         = "ADMIN_STATUS"
 )

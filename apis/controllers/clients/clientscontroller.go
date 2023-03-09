@@ -8,12 +8,13 @@ import (
 	"github.com/ravayak/copee_backend/apis/domain/clients"
 	data "github.com/ravayak/copee_backend/apis/domain/clients/data"
 	cs "github.com/ravayak/copee_backend/apis/services/clients"
+	au "github.com/ravayak/copee_backend/app/utils/auth"
 	gu "github.com/ravayak/copee_backend/app/utils/gin"
 	"github.com/ravayak/copee_backend/datasources/mysql"
 )
 
 func Get(c *gin.Context) {
-	clientID, exists := c.Get("objectId")
+	clientID, exists := c.Get("client_id")
 	cId := clientID.(int32)
 	if exists {
 		client, err := cs.ClientsService.GetClient(cId)
@@ -28,7 +29,7 @@ func Get(c *gin.Context) {
 }
 
 func Delete(c *gin.Context) {
-	clientId, exists := c.Get("objectId")
+	clientId, exists := c.Get("client_id")
 	if exists {
 		cId := clientId.(int32)
 		cs.ClientsService.DeleteClient(cId)
@@ -39,7 +40,7 @@ func Delete(c *gin.Context) {
 }
 
 func Update(c *gin.Context) {
-	clientId, exists := c.Get("objectId")
+	clientId, exists := c.Get("client_id")
 	cId := clientId.(int32)
 	if exists {
 		updatedClient := clients.Client{ClientID: cId}
@@ -82,13 +83,19 @@ func Create(c *gin.Context) {
 }
 
 func List(c *gin.Context) {
+	var err error
+	var clients []*clients.Client
 	userLogin, err := gu.GetUserLoginFromContext(c)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 
-	clients, err := cs.ClientsService.ListClientsByUser(userLogin.User.UserID)
+	if au.IsUserAdmin(userLogin) {
+		clients, err = cs.ClientsService.ListClients()
+	} else {
+		clients, err = cs.ClientsService.ListClientsByUser(userLogin.User.UserID)
+	}
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
 		return

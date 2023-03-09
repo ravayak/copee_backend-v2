@@ -45,6 +45,8 @@ func EnsureHasPrivileges() gin.HandlerFunc {
 			err = checkPrivilegesByResourceName(c, ul, privilege, "client_id", CheckIfClientIdBelongsToUserClients)
 		case md.GROUPS_USERS:
 			err = checkPrivilegesByResourceName(c, ul, privilege, "", nil)
+		case md.COMPANIES:
+			err = checkPrivilegesByResourceName(c, ul, privilege, "company_id", nil)
 		default:
 			c.Next()
 		}

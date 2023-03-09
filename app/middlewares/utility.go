@@ -89,7 +89,7 @@ func EnsurehasPrivilege(hasPrivilegeParams *md.PrivilegeParams) (*md.PrivilegePa
 			} else {
 				hasPrivilegeParams.HasPrivilege = true
 			}
-			hasPrivilegeParams.C.Set("objectId", id)
+			hasPrivilegeParams.C.Set(hasPrivilegeParams.ParamId, id)
 		} else {
 			hasPrivilegeParams.HasPrivilege = true
 		}

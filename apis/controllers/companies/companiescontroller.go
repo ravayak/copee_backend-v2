@@ -11,7 +11,7 @@ import (
 )
 
 func Get(c *gin.Context) {
-	companyId, exists := c.Get("objectId")
+	companyId, exists := c.Get("company_id")
 	cpId := companyId.(int32)
 	if exists {
 		company, err := cps.CompaniesService.GetCompany(cpId)
@@ -26,7 +26,7 @@ func Get(c *gin.Context) {
 }
 
 func Delete(c *gin.Context) {
-	companyId, exists := c.Get("objectId")
+	companyId, exists := c.Get("company_id")
 	if exists {
 		cpId := companyId.(int32)
 		cps.CompaniesService.DeleteCompany(cpId)
@@ -37,7 +37,7 @@ func Delete(c *gin.Context) {
 }
 
 func Update(c *gin.Context) {
-	companyId, exists := c.Get("objectId")
+	companyId, exists := c.Get("company_id")
 	cpId := companyId.(int32)
 	if exists {
 		updatedCompany := companies.Company{CID: cpId}

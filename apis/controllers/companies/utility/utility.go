@@ -21,7 +21,7 @@ func SetCompaniesParams(companiesParamsType string, companiesToEdit companies.Co
 	var companiesParams interface{}
 	if companiesParamsType == CREATE_COMPANIES_PARAMS {
 		companiesParams = mysql.CreateCompanyParams{
-			CGeoID:        sql.NullInt32{Int32: companiesToEdit.CGeoID, Valid: true},
+			// CGeoID:        sql.NullInt32{Int32: companiesToEdit.CGeoID, Valid: true},
 			CName:         sql.NullString{String: companiesToEdit.CName, Valid: true},
 			CRcs:          sql.NullString{String: companiesToEdit.CRcs, Valid: true},
 			CSiret:        sql.NullString{String: companiesToEdit.CSiret, Valid: true},
@@ -31,6 +31,11 @@ func SetCompaniesParams(companiesParamsType string, companiesToEdit companies.Co
 			CCreationDate: sql.NullString{String: companiesToEdit.CCreationDate, Valid: true},
 			CCapital:      sql.NullInt32{Int32: companiesToEdit.CCapital, Valid: true},
 		}
+	}
+	if companiesToEdit.CGeoID <= 0 {
+		// .
+	} else {
+		//
 	}
 
 	if companiesParamsType == UPDATE_COMPANIES_PARAMS {
