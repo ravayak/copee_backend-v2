@@ -1,0 +1,41 @@
+Processus de création d'un manager:
+
+Intégrer l'utilisateur dans le groupe MANAGER_POSITION.
+Créer une équipe à son nom (un groupe toto_team s'il s'appelle toto)
+relier chacun des utilisateurs à la nouvelle team via groups_users_lnk.
+
+Attention : 
+Un manager ne peut pas être intégré dans la team d'un autre manager.
+Un utilisateur ne peut pas être dans 2 teams à la fois.
+
+
+Chaque groupe "natif" doit avoir un nom précis.
+Quels sont les groupes natifs ?
+Ceux-ci :
+	X_STATUS pour déterminer un statut X
+	X_POSITION pour déterminer un poste dans l'entreprise
+	X_TEAM pour déterminer la team managée par X
+
+Seuls les postes de directeur commercial ou directeur peuvent avoir un droit de regard sur toutes les teams.
+Il faut pouvoir déterminer dans le logiciel quel droit il ont précisément.
+Un droit de regard sur l'ensemble des utilisateurs et leurs dossiers ou sur certaines informations filtrées 
+concernant les utilisateurs et leurs dossiers ?
+
+
+
+Requêtes SQL utiles :
+Tous les utilisateurs faisant partie d'une team
+
+SELECT DISTINCT users.* FROM users
+INNER JOIN groups_users_lnk ON users.user_id = groups_users_lnk.gu_user_id
+INNER JOIN `groups` ON groups_users_lnk.gu_group_id = `groups`.g_id
+WHERE `groups`.g_name = 'TEST_TEAM';
+
+
+Toutes les installations liées aux utilisateurs faisant partie d'une team :
+
+SELECT DISTINCT * FROM clients_installations
+INNER JOIN users ON clients_installations.ci_user_id = users.user_id
+INNER JOIN groups_users_lnk ON users.user_id = groups_users_lnk.gu_user_id
+INNER JOIN `groups` ON groups_users_lnk.gu_group_id = `groups`.g_id
+WHERE `groups`.g_name = 'TEST_TEAM';
